@@ -70,7 +70,7 @@ class DistanceSensorBase {
         */
         virtual int take_reading()
         {
-            if(!sensorEnabled || !sensorWorking)
+            if(!sensorEnabled)
             {
                 return -3;
             }
@@ -78,9 +78,10 @@ class DistanceSensorBase {
             int ret = sensor_Reading();
 
             // sensor returned error reading
-            if(ret == -2)
+            if(ret == -2 || !sensorWorking)
             {
                 sensorWorking = false;
+                return -2;
             }
 
             return ret;
